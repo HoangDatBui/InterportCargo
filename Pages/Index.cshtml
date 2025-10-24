@@ -1,10 +1,149 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "InterportCargo - Main Screen";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET hehe</a>.</p>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Welcome Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 text-primary mb-3">Welcome to InterportCargo</h1>
+                <p class="lead text-muted">Your trusted partner for freight and logistics services</p>
+            </div>
+
+            <!-- Main Navigation Cards -->
+            <div class="row g-4">
+                <!-- Customer Registration -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-user-plus fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title text-primary">New Customer?</h5>
+                            <p class="card-text text-muted">Register your account to start submitting quotation requests and manage your freight needs.</p>
+                            <a href="/Account/Register" class="btn btn-primary btn-lg w-100">Register as Customer</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Employee Registration -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-user-tie fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title text-success">New Employee?</h5>
+                            <p class="card-text text-muted">Register as an employee to access InterportCargo functions and manage operations.</p>
+                            <a href="/Account/RegisterEmployee" class="btn btn-success btn-lg w-100">Register as Employee</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-sign-in-alt fa-3x text-info"></i>
+                            </div>
+                            <h5 class="card-title text-info">Existing User?</h5>
+                            <p class="card-text text-muted">Log in to your account to access your dashboard and manage your requests.</p>
+                            <a href="/Account/Login" class="btn btn-info btn-lg w-100">Login</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Request Quotation -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-file-invoice-dollar fa-3x text-warning"></i>
+                            </div>
+                            <h5 class="card-title text-warning">Need a Quote?</h5>
+                            <p class="card-text text-muted">Submit a quotation request for your freight and logistics needs.</p>
+                            <div class="alert alert-info mb-3">
+                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                            </div>
+                            <a href="/Account/Login" class="btn btn-warning btn-lg w-100">Login to Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-calendar-check fa-3x text-secondary"></i>
+                            </div>
+                            <h5 class="card-title text-secondary">Book Services</h5>
+                            <p class="card-text text-muted">Schedule and manage your freight bookings and services.</p>
+                            <div class="alert alert-info mb-3">
+                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                            </div>
+                            <a href="/Account/Login" class="btn btn-secondary btn-lg w-100">Login to Manage Bookings</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outturn -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="fas fa-truck fa-3x text-dark"></i>
+                            </div>
+                            <h5 class="card-title text-dark">Outturn Management</h5>
+                            <p class="card-text text-muted">Track and manage cargo outturn operations and deliveries.</p>
+                            <div class="alert alert-info mb-3">
+                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                            </div>
+                            <a href="/Account/Login" class="btn btn-dark btn-lg w-100">Login for Outturn Services</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card bg-light border-0">
+                        <div class="card-body text-center p-4">
+                            <h5 class="card-title text-primary">About InterportCargo</h5>
+                            <p class="card-text">
+                                InterportCargo provides comprehensive freight and logistics solutions. 
+                                Whether you're a customer looking for reliable shipping services or an employee managing operations, 
+                                our system provides all the tools you need for efficient cargo management.
+                            </p>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <small class="text-muted">
+                                        <i class="fas fa-shield-alt me-1"></i>
+                                        Secure & Reliable
+                                    </small>
+                                </div>
+                                <div class="col-md-4">
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock me-1"></i>
+                                        24/7 Support
+                                    </small>
+                                </div>
+                                <div class="col-md-4">
+                                    <small class="text-muted">
+                                        <i class="fas fa-globe me-1"></i>
+                                        Global Reach
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,107 @@
+@page
+@model InterportCargo.Pages.Quotation.RequestModel
+@{
+    ViewData["Title"] = "Request Quotation";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-file-invoice-dollar fa-3x text-warning mb-3"></i>
+                        <h2 class="card-title text-warning">Request Quotation</h2>
+                        <p class="text-muted">Submit your freight and logistics requirements for a detailed quote</p>
+                    </div>
+
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="QuotationRequest.Source" class="form-label">Source Location</label>
+                                <input asp-for="QuotationRequest.Source" class="form-control" placeholder="Enter source location" />
+                                <span asp-validation-for="QuotationRequest.Source" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="QuotationRequest.Destination" class="form-label">Destination Location</label>
+                                <input asp-for="QuotationRequest.Destination" class="form-control" placeholder="Enter destination location" />
+                                <span asp-validation-for="QuotationRequest.Destination" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="QuotationRequest.NumberOfContainers" class="form-label">Number of Containers</label>
+                                <input asp-for="QuotationRequest.NumberOfContainers" type="number" class="form-control" min="1" />
+                                <span asp-validation-for="QuotationRequest.NumberOfContainers" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="QuotationRequest.NatureOfPackage" class="form-label">Nature of Package</label>
+                                <select asp-for="QuotationRequest.NatureOfPackage" class="form-control">
+                                    <option value="">Select package type</option>
+                                    <option value="GeneralCargo">General Cargo</option>
+                                    <option value="Refrigerated">Refrigerated</option>
+                                    <option value="Hazardous">Hazardous</option>
+                                    <option value="Oversized">Oversized</option>
+                                    <option value="Fragile">Fragile</option>
+                                </select>
+                                <span asp-validation-for="QuotationRequest.NatureOfPackage" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nature of Job</label>
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input asp-for="QuotationRequest.IsImport" class="form-check-input" />
+                                        <label asp-for="QuotationRequest.IsImport" class="form-check-label">Import</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input asp-for="QuotationRequest.IsExport" class="form-check-input" />
+                                        <label asp-for="QuotationRequest.IsExport" class="form-check-label">Export</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input asp-for="QuotationRequest.IsPacking" class="form-check-input" />
+                                        <label asp-for="QuotationRequest.IsPacking" class="form-check-label">Packing</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input asp-for="QuotationRequest.IsUnpacking" class="form-check-input" />
+                                        <label asp-for="QuotationRequest.IsUnpacking" class="form-check-label">Unpacking</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input asp-for="QuotationRequest.IsQuarantineRequired" class="form-check-input" />
+                                        <label asp-for="QuotationRequest.IsQuarantineRequired" class="form-check-label">Quarantine Required</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="QuotationRequest.AdditionalRequirements" class="form-label">Additional Requirements</label>
+                            <textarea asp-for="QuotationRequest.AdditionalRequirements" class="form-control" rows="4" placeholder="Enter any additional requirements or special instructions"></textarea>
+                            <span asp-validation-for="QuotationRequest.AdditionalRequirements" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/Index" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-warning btn-lg">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,87 @@
+@page
+@model InterportCargo.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register Customer";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h2 class="card-title text-primary">Register as Customer</h2>
+                        <p class="text-muted">Create your customer account to start using InterportCargo services</p>
+                    </div>
+
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Customer.FirstName" class="form-label">First Name</label>
+                                <input asp-for="Customer.FirstName" class="form-control" placeholder="Enter first name" />
+                                <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Customer.FamilyName" class="form-label">Family Name</label>
+                                <input asp-for="Customer.FamilyName" class="form-control" placeholder="Enter family name" />
+                                <span asp-validation-for="Customer.FamilyName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.Email" class="form-label">Email Address</label>
+                            <input asp-for="Customer.Email" type="email" class="form-control" placeholder="Enter email address" />
+                            <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="Customer.PhoneNumber" class="form-control" placeholder="Enter phone number" />
+                            <span asp-validation-for="Customer.PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.CompanyName" class="form-label">Company Name (Optional)</label>
+                            <input asp-for="Customer.CompanyName" class="form-control" placeholder="Enter company name" />
+                            <span asp-validation-for="Customer.CompanyName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.Address" class="form-label">Address</label>
+                            <textarea asp-for="Customer.Address" class="form-control" rows="3" placeholder="Enter your address"></textarea>
+                            <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.Password" class="form-label">Password</label>
+                            <input asp-for="Customer.Password" type="password" class="form-control" placeholder="Enter password" />
+                            <span asp-validation-for="Customer.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Customer.ConfirmPassword" class="form-label">Confirm Password</label>
+                            <input asp-for="Customer.ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+                            <span asp-validation-for="Customer.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            Already have an account? 
+                            <a href="/Account/Login" class="text-primary">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

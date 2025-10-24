@@ -1,0 +1,95 @@
+@page
+@model InterportCargo.Pages.Account.RegisterEmployeeModel
+@{
+    ViewData["Title"] = "Register Employee";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
+                        <h2 class="card-title text-success">Register as Employee</h2>
+                        <p class="text-muted">Create your employee account to access InterportCargo functions</p>
+                    </div>
+
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Employee.FirstName" class="form-label">First Name</label>
+                                <input asp-for="Employee.FirstName" class="form-control" placeholder="Enter first name" />
+                                <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Employee.FamilyName" class="form-label">Family Name</label>
+                                <input asp-for="Employee.FamilyName" class="form-control" placeholder="Enter family name" />
+                                <span asp-validation-for="Employee.FamilyName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.Email" class="form-label">Email Address</label>
+                            <input asp-for="Employee.Email" type="email" class="form-control" placeholder="Enter email address" />
+                            <span asp-validation-for="Employee.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="Employee.PhoneNumber" class="form-control" placeholder="Enter phone number" />
+                            <span asp-validation-for="Employee.PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.EmployeeType" class="form-label">Employee Type</label>
+                            <select asp-for="Employee.EmployeeType" class="form-control">
+                                <option value="">Select employee type</option>
+                                <option value="Admin">Admin</option>
+                                <option value="QuotationOfficer">Quotation Officer</option>
+                                <option value="BookingOfficer">Booking Officer</option>
+                                <option value="WarehouseOfficer">Warehouse Officer</option>
+                                <option value="Manager">Manager</option>
+                                <option value="CIO">CIO</option>
+                            </select>
+                            <span asp-validation-for="Employee.EmployeeType" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.Address" class="form-label">Address</label>
+                            <textarea asp-for="Employee.Address" class="form-control" rows="3" placeholder="Enter your address"></textarea>
+                            <span asp-validation-for="Employee.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.Password" class="form-label">Password</label>
+                            <input asp-for="Employee.Password" type="password" class="form-control" placeholder="Enter password" />
+                            <span asp-validation-for="Employee.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Employee.ConfirmPassword" class="form-label">Confirm Password</label>
+                            <input asp-for="Employee.ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+                            <span asp-validation-for="Employee.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">Register</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            Already have an account? 
+                            <a href="/Account/Login" class="text-primary">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

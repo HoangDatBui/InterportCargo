@@ -1,0 +1,32 @@
+@page
+@model InterportCargo.Pages.Outturn.IndexModel
+@{
+    ViewData["Title"] = "Outturn Management";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="text-dark">
+                        <i class="fas fa-truck me-2"></i>Outturn Management
+                    </h2>
+                    <p class="text-muted">Track and manage cargo outturn operations and deliveries</p>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="text-center py-5">
+                        <i class="fas fa-lock fa-4x text-dark mb-3"></i>
+                        <h4 class="text-dark">Authentication Required</h4>
+                        <p class="text-muted">You need to be logged in to access outturn management features.</p>
+                        <a href="/Account/Login" class="btn btn-dark me-2">Login</a>
+                        <a href="/Index" class="btn btn-outline-dark">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
