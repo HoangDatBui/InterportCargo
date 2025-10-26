@@ -1,7 +1,25 @@
+using InterportCargo.Application.Interfaces;
+using InterportCargo.Application.Services;
+using InterportCargo.BusinessLogic.Interfaces;
+using InterportCargo.BusinessLogic.Services;
+using InterportCargo.DataAccess.Interfaces;
+using InterportCargo.DataAccess.Repositories;
+using InterportCargo.DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Configure Entity Framework with SQLite
+builder.Services.AddDbContext<InterportCargoDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register layered architecture dependencies
+builder.Services.AddScoped<ICustomerAppService, CustomerAppService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
 
 var app = builder.Build();
 
