@@ -7,9 +7,13 @@ namespace InterportCargo.Pages.Outturn
     {
         public IActionResult OnGet()
         {
-            // TODO: Check if user is authenticated
-            // For now, redirect to login page
-            return RedirectToPage("/Account/Login");
+            // Check if user is authenticated
+            if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            return Page();
         }
     }
 }

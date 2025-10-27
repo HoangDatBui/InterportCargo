@@ -15,47 +15,50 @@
 
             <!-- Main Navigation Cards -->
             <div class="row g-4">
-                <!-- Customer Registration -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-user-plus fa-3x text-primary"></i>
+                @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+                {
+                    <!-- Customer Registration -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-user-plus fa-3x text-primary"></i>
+                                </div>
+                                <h5 class="card-title text-primary">New Customer?</h5>
+                                <p class="card-text text-muted">Register your account to start submitting quotation requests and manage your freight needs.</p>
+                                <a href="/Account/Register" class="btn btn-primary btn-lg w-100">Register as Customer</a>
                             </div>
-                            <h5 class="card-title text-primary">New Customer?</h5>
-                            <p class="card-text text-muted">Register your account to start submitting quotation requests and manage your freight needs.</p>
-                            <a href="/Account/Register" class="btn btn-primary btn-lg w-100">Register as Customer</a>
                         </div>
                     </div>
-                </div>
 
-                <!-- Employee Registration -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-user-tie fa-3x text-success"></i>
+                    <!-- Employee Registration -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-user-tie fa-3x text-success"></i>
+                                </div>
+                                <h5 class="card-title text-success">New Employee?</h5>
+                                <p class="card-text text-muted">Register as an employee to access InterportCargo functions and manage operations.</p>
+                                <a href="/Account/RegisterEmployee" class="btn btn-success btn-lg w-100">Register as Employee</a>
                             </div>
-                            <h5 class="card-title text-success">New Employee?</h5>
-                            <p class="card-text text-muted">Register as an employee to access InterportCargo functions and manage operations.</p>
-                            <a href="/Account/RegisterEmployee" class="btn btn-success btn-lg w-100">Register as Employee</a>
                         </div>
                     </div>
-                </div>
 
-                <!-- Login -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-sign-in-alt fa-3x text-info"></i>
+                    <!-- Login -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-sign-in-alt fa-3x text-info"></i>
+                                </div>
+                                <h5 class="card-title text-info">Existing User?</h5>
+                                <p class="card-text text-muted">Log in to your account to access your dashboard and manage your requests.</p>
+                                <a href="/Account/Login" class="btn btn-info btn-lg w-100">Login</a>
                             </div>
-                            <h5 class="card-title text-info">Existing User?</h5>
-                            <p class="card-text text-muted">Log in to your account to access your dashboard and manage your requests.</p>
-                            <a href="/Account/Login" class="btn btn-info btn-lg w-100">Login</a>
                         </div>
                     </div>
-                </div>
+                }
 
                 <!-- Request Quotation -->
                 <div class="col-md-6 col-lg-4">
@@ -66,10 +69,17 @@
                             </div>
                             <h5 class="card-title text-warning">Need a Quote?</h5>
                             <p class="card-text text-muted">Submit a quotation request for your freight and logistics needs.</p>
-                            <div class="alert alert-info mb-3">
-                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                            </div>
-                            <a href="/Account/Login" class="btn btn-warning btn-lg w-100">Login to Request Quote</a>
+                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+                            {
+                                <div class="alert alert-info mb-3">
+                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                                </div>
+                                <a href="/Account/Login" class="btn btn-warning btn-lg w-100">Login to Request Quote</a>
+                            }
+                            else
+                            {
+                                <a href="/Quotation/Request" class="btn btn-warning btn-lg w-100">Request Quotation</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -83,10 +93,17 @@
                             </div>
                             <h5 class="card-title text-secondary">Book Services</h5>
                             <p class="card-text text-muted">Schedule and manage your freight bookings and services.</p>
-                            <div class="alert alert-info mb-3">
-                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                            </div>
-                            <a href="/Account/Login" class="btn btn-secondary btn-lg w-100">Login to Manage Bookings</a>
+                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+                            {
+                                <div class="alert alert-info mb-3">
+                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                                </div>
+                                <a href="/Account/Login" class="btn btn-secondary btn-lg w-100">Login to Manage Bookings</a>
+                            }
+                            else
+                            {
+                                <a href="/Booking/Index" class="btn btn-secondary btn-lg w-100">Manage Bookings</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -100,10 +117,17 @@
                             </div>
                             <h5 class="card-title text-dark">Outturn Management</h5>
                             <p class="card-text text-muted">Track and manage cargo outturn operations and deliveries.</p>
-                            <div class="alert alert-info mb-3">
-                                <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                            </div>
-                            <a href="/Account/Login" class="btn btn-dark btn-lg w-100">Login for Outturn Services</a>
+                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+                            {
+                                <div class="alert alert-info mb-3">
+                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
+                                </div>
+                                <a href="/Account/Login" class="btn btn-dark btn-lg w-100">Login for Outturn Services</a>
+                            }
+                            else
+                            {
+                                <a href="/Outturn/Index" class="btn btn-dark btn-lg w-100">Outturn Services</a>
+                            }
                         </div>
                     </div>
                 </div>

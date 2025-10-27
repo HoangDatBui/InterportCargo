@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-8 col-lg-6">
             <div class="card shadow">
                 <div class="card-body p-4">
                     <div class="text-center mb-4">
@@ -21,6 +21,20 @@
                             <i class="fas fa-check-circle me-2"></i>
                             @TempData["SuccessMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @{
+                        var generalErrors = ViewData.ModelState[string.Empty];
+                    }
+                    @if (!ViewData.ModelState.IsValid && generalErrors?.Errors != null)
+                    {
+                        <div class="alert alert-danger" role="alert" style="white-space: nowrap;">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @foreach (var error in generalErrors.Errors)
+                            {
+                                <span>@error.ErrorMessage</span>
+                            }
                         </div>
                     }
 

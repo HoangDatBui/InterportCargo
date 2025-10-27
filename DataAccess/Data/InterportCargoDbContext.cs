@@ -23,6 +23,11 @@ namespace InterportCargo.DataAccess.Data
         public DbSet<Customer> Customers { get; set; }
 
         /// <summary>
+        /// DbSet for Employee entities
+        /// </summary>
+        public DbSet<Employee> Employees { get; set; }
+
+        /// <summary>
         /// Configures the model for Entity Framework
         /// </summary>
         /// <param name="modelBuilder">Model builder instance</param>
@@ -80,6 +85,61 @@ namespace InterportCargo.DataAccess.Data
                 
             modelBuilder.Entity<Customer>()
                 .Property(c => c.IsActive)
+                .HasDefaultValue(true);
+
+            // Configure Employee entity
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            
+            // Configure primary key
+            modelBuilder.Entity<Employee>().HasKey(e => e.Id);
+            
+            // Configure required fields
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.FamilyName)
+                .IsRequired()
+                .HasMaxLength(50);
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(100);
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(20);
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.Address)
+                .IsRequired()
+                .HasMaxLength(500);
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.PasswordHash)
+                .IsRequired();
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.EmployeeType)
+                .IsRequired()
+                .HasMaxLength(50);
+            
+            // Configure unique constraint on email
+            modelBuilder.Entity<Employee>()
+                .HasIndex(e => e.Email)
+                .IsUnique();
+            
+            // Configure default values
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.CreatedDate)
+                .HasDefaultValueSql("datetime('now')");
+                
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.IsActive)
                 .HasDefaultValue(true);
         }
     }

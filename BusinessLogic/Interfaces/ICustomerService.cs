@@ -57,7 +57,7 @@ namespace InterportCargo.BusinessLogic.Interfaces
     }
 
     /// <summary>
-    /// Result of customer registration operation
+    /// Result of registration operation (generic for both Customer and Employee)
     /// </summary>
     public class RegistrationResult
     {
@@ -72,21 +72,21 @@ namespace InterportCargo.BusinessLogic.Interfaces
         public string? ErrorMessage { get; set; }
 
         /// <summary>
-        /// The registered customer entity if successful
+        /// The registered entity if successful (can be Customer or Employee)
         /// </summary>
-        public Customer? Customer { get; set; }
+        public object? Entity { get; set; }
 
         /// <summary>
         /// Creates a successful registration result
         /// </summary>
-        /// <param name="customer">Registered customer</param>
+        /// <param name="entity">Registered entity (Customer or Employee)</param>
         /// <returns>Successful registration result</returns>
-        public static RegistrationResult Success(Customer customer)
+        public static RegistrationResult Success(object entity)
         {
             return new RegistrationResult
             {
                 IsSuccess = true,
-                Customer = customer
+                Entity = entity
             };
         }
 
