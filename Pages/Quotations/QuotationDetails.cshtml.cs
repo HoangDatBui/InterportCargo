@@ -15,7 +15,7 @@ namespace InterportCargo.Pages.Quotations
         private readonly IQuotationResponseRepository _quotationResponseRepository;
 
         /// <summary>
-        /// Initializes a new instance of the QuotationDetailsModel
+        /// Initialises a new instance of the QuotationDetailsModel
         /// </summary>
         public QuotationDetailsModel(
             IQuotationRequestRepository quotationRequestRepository,

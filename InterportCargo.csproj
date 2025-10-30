@@ -22,4 +22,10 @@
     <Folder Include="DataAccess\Repositories\" />
   </ItemGroup>
 
+  <!-- Exclude test project sources from being compiled into the web app project -->
+  <ItemGroup>
+    <Compile Remove="InterportCargo.Tests\**\*.cs" />
+    <None Include="InterportCargo.Tests\**\*.cs" />
+  </ItemGroup>
+
 </Project>

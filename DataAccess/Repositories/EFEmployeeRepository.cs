@@ -13,7 +13,7 @@ namespace InterportCargo.DataAccess.Repositories
         private readonly InterportCargoDbContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the EFEmployeeRepository
+        /// Initialises a new instance of the EFEmployeeRepository
         /// </summary>
         /// <param name="context">Database context</param>
         public EFEmployeeRepository(InterportCargoDbContext context)

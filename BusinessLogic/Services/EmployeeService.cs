@@ -14,7 +14,7 @@ namespace InterportCargo.BusinessLogic.Services
         private readonly IEmployeeRepository _employeeRepository;
 
         /// <summary>
-        /// Initializes a new instance of the EmployeeService
+        /// Initialises a new instance of the EmployeeService
         /// </summary>
         /// <param name="employeeRepository">Employee repository dependency</param>
         public EmployeeService(IEmployeeRepository employeeRepository)

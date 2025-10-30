@@ -12,7 +12,7 @@ namespace InterportCargo.Application.Services
         private readonly IEmployeeService _employeeService;
 
         /// <summary>
-        /// Initializes a new instance of the EmployeeAppService
+        /// Initialises a new instance of the EmployeeAppService
         /// </summary>
         /// <param name="employeeService">Employee service dependency</param>
         public EmployeeAppService(IEmployeeService employeeService)

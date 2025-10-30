@@ -12,7 +12,7 @@ namespace InterportCargo.Application.Services
         private readonly ICustomerService _customerService;
 
         /// <summary>
-        /// Initializes a new instance of the CustomerAppService
+        /// Initialises a new instance of the CustomerAppService
         /// </summary>
         /// <param name="customerService">Customer service dependency</param>
         public CustomerAppService(ICustomerService customerService)

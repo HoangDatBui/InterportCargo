@@ -13,7 +13,7 @@ namespace InterportCargo.DataAccess.Repositories
         private readonly InterportCargoDbContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the EFQuotationRequestRepository
+        /// Initialises a new instance of the EFQuotationRequestRepository
         /// </summary>
         /// <param name="context">Database context</param>
         public EFQuotationRequestRepository(InterportCargoDbContext context)
