@@ -1,0 +1,245 @@
+@page "{id:int}"
+@model InterportCargo.Pages.Quotations.QuotationDetailsModel
+@{
+    ViewData["Title"] = "Quotation Details";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <i class="fas fa-file-invoice-dollar me-2"></i>Quotation Details
+                        </h3>
+                        <span class="badge bg-light text-dark fs-6">@Model.QuotationDetails?.QuotationNumber</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.QuotationDetails == null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Quotation not found.
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Customer Information -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-user me-2"></i>Customer Information
+                                </h5>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Name:</strong> @Model.CustomerName</p>
+                                        <p class="mb-2"><strong>Email:</strong> @Model.CustomerEmail</p>
+                                        <p class="mb-0"><strong>Request ID:</strong> @Model.RequestId</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Quotation Information
+                                </h5>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Quotation Number:</strong> @Model.QuotationDetails.QuotationNumber</p>
+                                        <p class="mb-2"><strong>Date Issued:</strong> @Model.QuotationDetails.DateIssued.ToString("MM/dd/yyyy")</p>
+                                        <p class="mb-0"><strong>Container Type:</strong> @Model.QuotationDetails.ContainerType</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scope Description -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-tasks me-2"></i>Scope of Work
+                                </h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p>@Model.QuotationDetails.Scope</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charges Summary -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-calculator me-2"></i>Charges Summary
+                                </h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row mb-2 align-items-center">
+                                            <div class="col-md-8 text-end">
+                                                <strong>Subtotal:</strong>
+                                            </div>
+                                            <div class="col-md-4 text-end" style="white-space: nowrap;">
+                                                $@Model.QuotationDetails.Subtotal.ToString("N2")
+                                            </div>
+                                        </div>
+                                        @if (Model.QuotationDetails.DiscountPercentage > 0)
+                                        {
+                                            <div class="row mb-2 text-success align-items-center">
+                                                <div class="col-md-8 text-end">
+                                                    <strong>Discount (@Model.QuotationDetails.DiscountPercentage%):</strong>
+                                                </div>
+                                                <div class="col-md-4 text-end" style="white-space: nowrap;">
+                                                    <strong>-$@Model.QuotationDetails.DiscountAmount.ToString("N2")</strong>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="row mb-2 align-items-center">
+                                            <div class="col-md-8 text-end">
+                                                <strong>GST (10%):</strong>
+                                            </div>
+                                            <div class="col-md-4 text-end" style="white-space: nowrap;">
+                                                $@Model.QuotationDetails.GST.ToString("N2")
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8 text-end">
+                                                <h4><strong>Total Amount:</strong></h4>
+                                            </div>
+                                            <div class="col-md-4 text-end" style="white-space: nowrap;">
+                                                <h4 class="text-primary"><strong>$@Model.QuotationDetails.TotalAmount.ToString("N2")</strong></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        @if (Model.IsEmployee)
+                        {
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <a href="@Url.Page("/Quotations/Details", new { id = Model.QuotationRequestId })" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Request
+                                    </a>
+                                    <a href="@Url.Page("/Quotations/Index")" class="btn btn-primary">
+                                        <i class="fas fa-list me-2"></i>View All Quotations
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Customer Actions -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card border-warning">
+                                        <div class="card-body">
+                                            <h5 class="text-warning"><i class="fas fa-exclamation-circle me-2"></i>Your Response</h5>
+                                            <p class="mb-3">Please review this quotation and let us know if you would like to proceed.</p>
+                                            
+                                            @if (Model.QuotationDetails.Status == "Pending")
+                                            {
+                                                <form method="post" class="d-inline">
+                                                    <input type="hidden" name="action" value="accept" />
+                                                    <button type="submit" class="btn btn-success btn-lg me-2">
+                                                        <i class="fas fa-check-circle me-2"></i>Accept Quotation
+                                                    </button>
+                                                </form>
+                                                <form method="post" class="d-inline" id="rejectForm">
+                                                    <input type="hidden" name="action" value="reject" />
+                                                    <button type="button" class="btn btn-danger btn-lg" onclick="showRejectReason()">
+                                                        <i class="fas fa-times-circle me-2"></i>Reject Quotation
+                                                    </button>
+                                                </form>
+
+                                                <!-- Reject Reason Modal (Hidden) -->
+                                                <div class="modal fade" id="rejectModal" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Rejection Reason</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <form method="post" id="rejectReasonForm">
+                                                                <input type="hidden" name="action" value="reject" />
+                                                                <input type="hidden" name="rejectReason" id="rejectReasonValue" />
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Please provide a reason for rejection:</label>
+                                                                        <textarea id="rejectReasonText" class="form-control" rows="3" required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" class="btn btn-danger">Submit Rejection</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.QuotationDetails.Status == "Accepted")
+                                            {
+                                                <div class="alert alert-success">
+                                                    <i class="fas fa-check-circle me-2"></i>
+                                                    You have accepted this quotation. We will contact you shortly.
+                                                </div>
+                                            }
+                                            else if (Model.QuotationDetails.Status == "Rejected")
+                                            {
+                                                <div class="alert alert-danger">
+                                                    <i class="fas fa-times-circle me-2"></i>
+                                                    You have rejected this quotation.
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <a href="/Quotations/Index" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to My Quotations
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showRejectReason() {
+            var myModal = new bootstrap.Modal(document.getElementById('rejectModal'));
+            myModal.show();
+        }
+
+        document.getElementById('rejectReasonForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var reason = document.getElementById('rejectReasonText').value;
+            document.getElementById('rejectReasonValue').value = reason;
+            
+            // Get form data
+            var formData = new FormData(this);
+            
+            // Submit via fetch
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData
+            }).then(function(response) {
+                if (response.ok) {
+                    window.location.href = response.url;
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,260 @@
+@page "{id:int}"
+@model InterportCargo.Pages.Quotations.DetailsModel
+@{
+    ViewData["Title"] = "Quotation Details";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="text-primary mb-1">
+                                <i class="fas fa-file-invoice-dollar me-2"></i>Quotation Details
+                            </h2>
+                            <p class="text-muted mb-0">Request ID: <strong>@Model.QuotationRequest?.RequestId</strong></p>
+                        </div>
+                        <div>
+                            @if (Model.QuotationRequest?.Status == "Pending")
+                            {
+                                <span class="badge bg-warning text-dark fs-6">@Model.QuotationRequest.Status</span>
+                            }
+                            else if (Model.QuotationRequest?.Status == "Accepted")
+                            {
+                                <span class="badge bg-success fs-6">@Model.QuotationRequest.Status</span>
+                            }
+                            else if (Model.QuotationRequest?.Status == "Rejected")
+                            {
+                                <span class="badge bg-danger fs-6">@Model.QuotationRequest.Status</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary fs-6">@Model.QuotationRequest?.Status</span>
+                            }
+                        </div>
+                    </div>
+
+                    @if (Model.QuotationRequest == null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Quotation request not found.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <!-- Customer Information -->
+                                <h5 class="text-primary mb-3"><i class="fas fa-user me-2"></i>Customer Information</h5>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Customer Name:</strong> @Model.QuotationRequest.CustomerName</p>
+                                        <p class="mb-2"><strong>Email:</strong> @Model.QuotationRequest.CustomerEmail</p>
+                                        <p class="mb-0"><strong>Customer ID:</strong> @Model.QuotationRequest.CustomerId</p>
+                                    </div>
+                                </div>
+
+                                <!-- Shipping Information -->
+                                <h5 class="text-primary mb-3"><i class="fas fa-truck me-2"></i>Shipping Information</h5>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Source:</strong> @Model.QuotationRequest.Source</p>
+                                        <p class="mb-2"><strong>Destination:</strong> @Model.QuotationRequest.Destination</p>
+                                        <p class="mb-0"><strong>Number of Containers:</strong> @Model.QuotationRequest.NumberOfContainers</p>
+                                    </div>
+                                </div>
+
+                                <!-- Package Information -->
+                                <h5 class="text-primary mb-3"><i class="fas fa-box me-2"></i>Package Information</h5>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Nature of Package:</strong> @Model.QuotationRequest.NatureOfPackage</p>
+                                        <p class="mb-2"><strong>Dimensions:</strong></p>
+                                        <ul class="mb-0">
+                                            <li>Width: @Model.QuotationRequest.PackageWidth ft</li>
+                                            <li>Height: @Model.QuotationRequest.PackageHeight ft</li>
+                                            @if (Model.QuotationRequest.PackageDepth.HasValue)
+                                            {
+                                                <li>Depth: @Model.QuotationRequest.PackageDepth ft</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <!-- Nature of Job -->
+                                <h5 class="text-primary mb-3"><i class="fas fa-tasks me-2"></i>Nature of Job</h5>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <p class="mb-2"><strong>Import/Export:</strong> @Model.QuotationRequest.ImportOrExport</p>
+                                        <p class="mb-0"><strong>Packing/Unpacking:</strong> @Model.QuotationRequest.PackingOrUnpacking</p>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Services -->
+                                @if (Model.QuotationRequest.IsQuarantineRequired || Model.QuotationRequest.IsFumigationRequired)
+                                {
+                                    <h5 class="text-primary mb-3"><i class="fas fa-clipboard-check me-2"></i>Additional Services</h5>
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            @if (Model.QuotationRequest.IsQuarantineRequired)
+                                            {
+                                                <p class="mb-2"><strong>Quarantine Required:</strong> Yes</p>
+                                                @if (!string.IsNullOrEmpty(Model.QuotationRequest.QuarantineDetails))
+                                                {
+                                                    <p class="mb-2"><strong>Quarantine Details:</strong></p>
+                                                    <p class="mb-3 text-muted">@Model.QuotationRequest.QuarantineDetails</p>
+                                                }
+                                            }
+                                            @if (Model.QuotationRequest.IsFumigationRequired)
+                                            {
+                                                <p class="mb-2"><strong>Fumigation Required:</strong> Yes</p>
+                                                @if (!string.IsNullOrEmpty(Model.QuotationRequest.FumigationDetails))
+                                                {
+                                                    <p class="mb-2"><strong>Fumigation Details:</strong></p>
+                                                    <p class="mb-0 text-muted">@Model.QuotationRequest.FumigationDetails</p>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (!string.IsNullOrEmpty(Model.QuotationRequest.AdditionalRequirements))
+                                {
+                                    <h5 class="text-primary mb-3"><i class="fas fa-comments me-2"></i>Additional Requirements</h5>
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <p class="text-muted">@Model.QuotationRequest.AdditionalRequirements</p>
+                                        </div>
+                                    </div>
+                                }
+
+                                <!-- Dates -->
+                                <h5 class="text-primary mb-3"><i class="fas fa-calendar me-2"></i>Date Information</h5>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <p class="mb-0"><strong>Submitted Date:</strong> @Model.QuotationRequest.CreatedDate.ToString("MM/dd/yyyy HH:mm")</p>
+                                    </div>
+                                </div>
+
+                                @if (Model.IsEmployee && Model.HasQuotationDetails && Model.CustomerResponses != null && Model.CustomerResponses.Any())
+                                {
+                                    <h5 class="text-primary mb-3"><i class="fas fa-comments me-2"></i>Customer Response</h5>
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            @foreach (var response in Model.CustomerResponses)
+                                            {
+                                                <div class="mb-3 pb-3 @(!response.IsRead ? "border-bottom border-3 border-warning" : "border-bottom")">
+                                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                                        <div>
+                                                            <strong>@response.CustomerName</strong>
+                                                            @if (!response.IsRead)
+                                                            {
+                                                                <span class="badge bg-danger ms-2">New</span>
+                                                            }
+                                                        </div>
+                                                        <small class="text-muted">@response.CreatedDate.ToString("MM/dd/yyyy HH:mm")</small>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        @if (response.Status == "Accepted")
+                                                        {
+                                                            <span class="badge bg-success me-2">@response.Status</span>
+                                                        }
+                                                        else if (response.Status == "Rejected")
+                                                        {
+                                                            <span class="badge bg-danger me-2">@response.Status</span>
+                                                        }
+                                                    </div>
+                                                    @if (!string.IsNullOrEmpty(response.Message))
+                                                    {
+                                                        <p class="mb-0">@response.Message</p>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (Model.IsEmployee)
+                                {
+                                    @if (Model.QuotationRequest.Status == "Pending")
+                                    {
+                                        <h5 class="text-primary mb-3"><i class="fas fa-tasks me-2"></i>Actions</h5>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <form method="post" class="mb-3">
+                                                    <input type="hidden" name="action" value="accept" />
+                                                    <input type="hidden" name="id" value="@Model.QuotationRequest.Id" />
+                                                    <button type="submit" class="btn btn-success w-100 mb-2">
+                                                        <i class="fas fa-check-circle me-2"></i>Accept Quotation Request
+                                                    </button>
+                                                </form>
+                                                
+                                                <form method="post" id="rejectForm">
+                                                    <input type="hidden" name="action" value="reject" />
+                                                    <input type="hidden" name="id" value="@Model.QuotationRequest.Id" />
+                                                    <div class="mb-3">
+                                                        <label for="rejectMessage" class="form-label">Rejection Message (Required)</label>
+                                                        <textarea name="rejectMessage" id="rejectMessage" class="form-control" rows="3" placeholder="Enter reason for rejection..." required></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-danger w-100">
+                                                        <i class="fas fa-times-circle me-2"></i>Reject Quotation Request
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.QuotationRequest.Status == "Accepted")
+                                    {
+                                        <h5 class="text-primary mb-3"><i class="fas fa-tasks me-2"></i>Actions</h5>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                @if (Model.HasQuotationDetails)
+                                                {
+                                                    <div class="alert alert-info mb-3">
+                                                        <i class="fas fa-info-circle me-2"></i>
+                                                        A quotation has already been prepared for this request.
+                                                    </div>
+                                                    <a href="/Quotations/QuotationDetails/@Model.QuotationRequest.Id" class="btn btn-primary w-100 mb-2">
+                                                        <i class="fas fa-eye me-2"></i>View/Edit Quotation
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="/Quotations/Prepare/@Model.QuotationRequest.Id" class="btn btn-primary w-100 mb-2">
+                                                        <i class="fas fa-calculator me-2"></i>Prepare Quotation
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                    <div class="d-grid gap-2">
+                                        <a href="/Quotations/Index" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left me-2"></i>Back to Quotations
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-grid gap-2">
+                                        <a href="/Quotations/Index" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left me-2"></i>Back to My Quotations
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

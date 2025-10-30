@@ -3,6 +3,7 @@ using System;
 using InterportCargo.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterportCargo.Migrations
 {
     [DbContext(typeof(InterportCargoDbContext))]
-    partial class InterportCargoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028033827_AddQuotationDetailsTable")]
+    partial class AddQuotationDetailsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -315,13 +318,6 @@ namespace InterportCargo.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("datetime('now')");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CustomerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsRead")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
@@ -331,10 +327,11 @@ namespace InterportCargo.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("OfficerId")
+                    b.Property<int>("OfficerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("OfficerName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
@@ -344,13 +341,6 @@ namespace InterportCargo.Migrations
 
                     b.Property<int>("QuotationRequestId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ResponseType")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("Officer");
 
                     b.Property<string>("Status")
                         .IsRequired()

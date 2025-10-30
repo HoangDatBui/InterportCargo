@@ -12,9 +12,15 @@ namespace InterportCargo.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            // If user is authenticated, redirect to Quotations page
+            if (HttpContext.Session.GetString("IsAuthenticated") == "true")
+            {
+                return RedirectToPage("/Quotations/Index");
+            }
 
+            return Page();
         }
     }
 }

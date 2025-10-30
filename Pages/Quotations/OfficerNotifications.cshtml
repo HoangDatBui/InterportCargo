@@ -1,0 +1,130 @@
+@page
+@model InterportCargo.Pages.Quotations.OfficerNotificationsModel
+@{
+    ViewData["Title"] = "Officer Notifications";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="text-primary mb-1">
+                        <i class="fas fa-bell me-2"></i>Customer Responses
+                    </h2>
+                    <p class="text-muted mb-0">Notifications from customers regarding quotations</p>
+                </div>
+                <a href="/Quotations/Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Quotations
+                </a>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Notifications List -->
+            @if (Model.CustomerResponses != null && Model.CustomerResponses.Any())
+            {
+                <div class="card shadow">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Request ID</th>
+                                        <th>Quotation Number</th>
+                                        <th>Status</th>
+                                        <th>Message</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var response in Model.CustomerResponses)
+                                    {
+                                        <tr class="@(!response.IsRead ? "table-warning" : "")">
+                                            <td>@response.CreatedDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                            <td>
+                                                <strong>@response.CustomerName</strong>
+                                                @if (!response.IsRead)
+                                                {
+                                                    <span class="badge bg-danger ms-2">New</span>
+                                                }
+                                            </td>
+                                            <td>@response.QuotationRequest?.RequestId</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(response.QuotationNumber))
+                                                {
+                                                    <strong>@response.QuotationNumber</strong>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (response.Status == "Accepted")
+                                                {
+                                                    <span class="badge bg-success">@response.Status</span>
+                                                }
+                                                else if (response.Status == "Rejected")
+                                                {
+                                                    <span class="badge bg-danger">@response.Status</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">@response.Status</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(response.Message))
+                                                {
+                                                    <span>@response.Message</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!response.IsRead)
+                                                {
+                                                    <form method="post" asp-page-handler="MarkAsRead" class="d-inline">
+                                                        <input type="hidden" name="id" value="@response.Id" />
+                                                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-check me-1"></i>Mark as Read
+                                                        </button>
+                                                    </form>
+                                                }
+                                                <a href="/Quotations/Details/@response.QuotationRequestId" class="btn btn-sm btn-info ms-1">
+                                                    <i class="fas fa-eye me-1"></i>View Request
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <p class="text-muted">
+                        <strong>@Model.UnreadCount</strong> unread notification(s)
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Notifications</h4>
+                        <p class="text-muted">You don't have any customer responses yet.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

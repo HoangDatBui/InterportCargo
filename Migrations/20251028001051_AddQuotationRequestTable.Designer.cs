@@ -3,6 +3,7 @@ using System;
 using InterportCargo.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterportCargo.Migrations
 {
     [DbContext(typeof(InterportCargoDbContext))]
-    partial class InterportCargoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028001051_AddQuotationRequestTable")]
+    partial class AddQuotationRequestTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -132,82 +135,6 @@ namespace InterportCargo.Migrations
                     b.ToTable("Employees", (string)null);
                 });
 
-            modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.QuotationDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("AmountAfterDiscount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ContainerType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.Property<DateTime>("DateIssued")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("GST")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ItemizedCharges")
-                        .HasMaxLength(2000)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("OfficerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("OfficerName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("QuotationNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("QuotationRequestId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Scope")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("Pending");
-
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuotationRequestId");
-
-                    b.ToTable("QuotationDetails", (string)null);
-                });
-
             modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.QuotationRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -302,124 +229,6 @@ namespace InterportCargo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("QuotationRequests", (string)null);
-                });
-
-            modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.QuotationResponse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CustomerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsRead")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Message")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("OfficerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("OfficerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("QuotationNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("QuotationRequestId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ResponseType")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("Officer");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuotationRequestId");
-
-                    b.ToTable("QuotationResponses", (string)null);
-                });
-
-            modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.RateSchedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(true);
-
-                    b.Property<decimal>("Rate20Feet")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Rate40Feet")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ServiceType")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RateSchedules", (string)null);
-                });
-
-            modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.QuotationDetails", b =>
-                {
-                    b.HasOne("InterportCargo.BusinessLogic.Entities.QuotationRequest", "QuotationRequest")
-                        .WithMany()
-                        .HasForeignKey("QuotationRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuotationRequest");
-                });
-
-            modelBuilder.Entity("InterportCargo.BusinessLogic.Entities.QuotationResponse", b =>
-                {
-                    b.HasOne("InterportCargo.BusinessLogic.Entities.QuotationRequest", "QuotationRequest")
-                        .WithMany()
-                        .HasForeignKey("QuotationRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuotationRequest");
                 });
 #pragma warning restore 612, 618
         }

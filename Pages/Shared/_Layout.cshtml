@@ -30,38 +30,49 @@
                                 </span>
                             </li>
                         }
-                        else
+
+                        <!-- Services as separate menu items -->
+                        @if (Context.Session.GetString("IsAuthenticated") == "true")
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user me-1"></i>Account
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Quotations/Index">
+                                    <i class="fas fa-file-invoice-dollar me-1"></i>Quotations
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                                    <li><a class="dropdown-item" href="/Account/Login"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li>
-                                    <li><a class="dropdown-item" href="/Account/Register"><i class="fas fa-user-plus me-2"></i>Register Customer</a></li>
-                                    <li><a class="dropdown-item" href="/Account/RegisterEmployee"><i class="fas fa-user-tie me-2"></i>Register Employee</a></li>
-                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Booking/Index">
+                                    <i class="fas fa-calendar-check me-1"></i>Bookings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Outturn/Index">
+                                    <i class="fas fa-truck me-1"></i>Outturn
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/RateSchedule/Index">
+                                    <i class="fas fa-calculator me-1"></i>Rate Schedule
+                                </a>
                             </li>
                         }
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-cogs me-1"></i>Services
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                @if (Context.Session.GetString("IsAuthenticated") == "true")
-                                {
-                                    <li><a class="dropdown-item" href="/Quotation/Request"><i class="fas fa-file-invoice-dollar me-2"></i>Request Quotation</a></li>
-                                    <li><a class="dropdown-item" href="/Booking/Index"><i class="fas fa-calendar-check me-2"></i>Bookings</a></li>
-                                    <li><a class="dropdown-item" href="/Outturn/Index"><i class="fas fa-truck me-2"></i>Outturn</a></li>
-                                }
-                                else
-                                {
-                                    <li><a class="dropdown-item" href="/Account/Login"><i class="fas fa-sign-in-alt me-2"></i>Login to Request Quotation</a></li>
-                                    <li><a class="dropdown-item" href="/Account/Login"><i class="fas fa-sign-in-alt me-2"></i>Login for Bookings</a></li>
-                                    <li><a class="dropdown-item" href="/Account/Login"><i class="fas fa-sign-in-alt me-2"></i>Login for Outturn</a></li>
-                                }
-                            </ul>
-                        </li>
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Account/Login">
+                                    <i class="fas fa-file-invoice-dollar me-1"></i>Quotations
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Account/Login">
+                                    <i class="fas fa-calendar-check me-1"></i>Bookings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Account/Login">
+                                    <i class="fas fa-truck me-1"></i>Outturn
+                                </a>
+                            </li>
+                        }
                         @if (Context.Session.GetString("IsAuthenticated") == "true")
                         {
                             <li class="nav-item ms-auto">

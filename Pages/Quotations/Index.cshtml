@@ -1,0 +1,190 @@
+@page
+@model InterportCargo.Pages.Quotations.IndexModel
+@{
+    ViewData["Title"] = "Quotations";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="text-primary mb-1">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Quotations
+                    </h2>
+                    @if (Model.IsEmployee)
+                    {
+                        <p class="text-muted mb-0">All quotation requests submitted by customers</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Your quotation requests</p>
+                    }
+                </div>
+                @if (HttpContext.Session.GetString("IsAuthenticated") == "true" && Model.IsEmployee)
+                {
+                    <div class="d-flex align-items-center gap-3">
+                        @if (Model.UnreadOfficerNotificationCount > 0)
+                        {
+                            <a href="/Quotations/OfficerNotifications" class="btn btn-info position-relative">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @Model.UnreadOfficerNotificationCount
+                                </span>
+                            </a>
+                        }
+                    </div>
+                }
+                else if (HttpContext.Session.GetString("IsAuthenticated") == "true" && !Model.IsEmployee)
+                {
+                    <div class="d-flex align-items-center gap-3">
+                        @if (Model.UnreadNotificationCount > 0)
+                        {
+                            <a href="/Quotations/Notifications" class="btn btn-info position-relative">
+                                <i class="fas fa-bell"></i>
+                                @if (Model.UnreadNotificationCount > 0)
+                                {
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        @Model.UnreadNotificationCount
+                                    </span>
+                                }
+                            </a>
+                        }
+                        <a href="/Quotation/Request" class="btn btn-warning btn-lg">
+                            <i class="fas fa-plus me-2"></i>New Quotation Request
+                        </a>
+                    </div>
+                }
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Quotations Table -->
+            @if (Model.QuotationRequests != null && Model.QuotationRequests.Any())
+            {
+                <div class="card shadow">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Request ID</th>
+                                        @if (Model.IsEmployee)
+                                        {
+                                            <th>Customer Name</th>
+                                            <th>Customer Email</th>
+                                        }
+                                        <th>Source</th>
+                                        <th>Destination</th>
+                                        <th>Containers</th>
+                                        <th>Nature</th>
+                                        <th>Import/Export</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var quotation in Model.QuotationRequests)
+                                    {
+                                        <tr>
+                                            <td><strong>@quotation.RequestId</strong></td>
+                                            @if (Model.IsEmployee)
+                                            {
+                                                <td>@quotation.CustomerName</td>
+                                                <td>@quotation.CustomerEmail</td>
+                                            }
+                                            <td>@quotation.Source</td>
+                                            <td>@quotation.Destination</td>
+                                            <td>@quotation.NumberOfContainers</td>
+                                            <td>@quotation.NatureOfPackage</td>
+                                            <td>@quotation.ImportOrExport</td>
+                                            <td>
+                                                @if (quotation.Status == "Pending")
+                                                {
+                                                    <span class="badge bg-warning text-dark">@quotation.Status</span>
+                                                }
+                                                else if (quotation.Status == "Accepted")
+                                                {
+                                                    <span class="badge bg-success">@quotation.Status</span>
+                                                }
+                                                else if (quotation.Status == "Rejected")
+                                                {
+                                                    <span class="badge bg-danger">@quotation.Status</span>
+                                                }
+                                                else if (quotation.Status.Contains("Quoted"))
+                                                {
+                                                    <span class="badge bg-info">@quotation.Status</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">@quotation.Status</span>
+                                                }
+                                            </td>
+                                            <td>@quotation.CreatedDate.ToString("MM/dd/yyyy")</td>
+                                            <td>
+                                                @if (Model.IsEmployee)
+                                                {
+                                                    <a href="/Quotations/Details/@quotation.Id" class="btn btn-sm btn-info">
+                                                        <i class="fas fa-eye me-1"></i>View
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @* Customer Actions *@
+                                                    @if (Model.HasQuotationDetails.ContainsKey(quotation.Id) && Model.HasQuotationDetails[quotation.Id])
+                                                    {
+                                                        <a href="/Quotations/QuotationDetails/@quotation.Id" class="btn btn-sm btn-primary">
+                                                            <i class="fas fa-file-invoice-dollar me-1"></i>View Quotation & Respond
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted small">Waiting for quotation...</span>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Quotations Found</h4>
+                        <p class="text-muted">
+                            @if (Model.IsEmployee)
+                            {
+                                <span>No quotation requests have been submitted yet.</span>
+                            }
+                            else
+                            {
+                                <span>You haven't submitted any quotation requests yet.</span>
+                            }
+                        </p>
+                        @if (!Model.IsEmployee && HttpContext.Session.GetString("IsAuthenticated") == "true")
+                        {
+                            <a href="/Quotation/Request" class="btn btn-warning mt-3">
+                                <i class="fas fa-plus me-2"></i>Submit Your First Quotation Request
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

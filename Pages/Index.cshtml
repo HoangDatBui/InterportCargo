@@ -1,7 +1,18 @@
 ﻿@page
-@model IndexModel
+@model InterportCargo.Pages.IndexModel
 @{
     ViewData["Title"] = "InterportCargo - Main Screen";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
 }
 
 <div class="container-fluid">
@@ -13,12 +24,12 @@
                 <p class="lead text-muted">Your trusted partner for freight and logistics services</p>
             </div>
 
-            <!-- Main Navigation Cards -->
-            <div class="row g-4">
-                @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
-                {
+            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
+            {
+                <!-- Registration and Login Options -->
+                <div class="row g-4 mb-5">
                     <!-- Customer Registration -->
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-4">
                         <div class="card h-100 shadow-sm border-0">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
@@ -32,7 +43,7 @@
                     </div>
 
                     <!-- Employee Registration -->
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-4">
                         <div class="card h-100 shadow-sm border-0">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
@@ -46,7 +57,7 @@
                     </div>
 
                     <!-- Login -->
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-4">
                         <div class="card h-100 shadow-sm border-0">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
@@ -58,116 +69,53 @@
                             </div>
                         </div>
                     </div>
-                }
-
-                <!-- Request Quotation -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-file-invoice-dollar fa-3x text-warning"></i>
-                            </div>
-                            <h5 class="card-title text-warning">Need a Quote?</h5>
-                            <p class="card-text text-muted">Submit a quotation request for your freight and logistics needs.</p>
-                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
-                            {
-                                <div class="alert alert-info mb-3">
-                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                                </div>
-                                <a href="/Account/Login" class="btn btn-warning btn-lg w-100">Login to Request Quote</a>
-                            }
-                            else
-                            {
-                                <a href="/Quotation/Request" class="btn btn-warning btn-lg w-100">Request Quotation</a>
-                            }
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Booking -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-calendar-check fa-3x text-secondary"></i>
+                <!-- Additional Information -->
+                <div class="card bg-light border-0 mb-4">
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title text-primary">About InterportCargo</h5>
+                        <p class="card-text">
+                            InterportCargo provides comprehensive freight and logistics solutions. 
+                            Whether you're a customer looking for reliable shipping services or an employee managing operations, 
+                            our system provides all the tools you need for efficient cargo management.
+                        </p>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <small class="text-muted">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Secure & Reliable
+                                </small>
                             </div>
-                            <h5 class="card-title text-secondary">Book Services</h5>
-                            <p class="card-text text-muted">Schedule and manage your freight bookings and services.</p>
-                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
-                            {
-                                <div class="alert alert-info mb-3">
-                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                                </div>
-                                <a href="/Account/Login" class="btn btn-secondary btn-lg w-100">Login to Manage Bookings</a>
-                            }
-                            else
-                            {
-                                <a href="/Booking/Index" class="btn btn-secondary btn-lg w-100">Manage Bookings</a>
-                            }
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Outturn -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-body text-center p-4">
-                            <div class="mb-3">
-                                <i class="fas fa-truck fa-3x text-dark"></i>
+                            <div class="col-md-4">
+                                <small class="text-muted">
+                                    <i class="fas fa-clock me-1"></i>
+                                    24/7 Support
+                                </small>
                             </div>
-                            <h5 class="card-title text-dark">Outturn Management</h5>
-                            <p class="card-text text-muted">Track and manage cargo outturn operations and deliveries.</p>
-                            @if (HttpContext.Session.GetString("IsAuthenticated") != "true")
-                            {
-                                <div class="alert alert-info mb-3">
-                                    <small><i class="fas fa-info-circle me-1"></i>Login required</small>
-                                </div>
-                                <a href="/Account/Login" class="btn btn-dark btn-lg w-100">Login for Outturn Services</a>
-                            }
-                            else
-                            {
-                                <a href="/Outturn/Index" class="btn btn-dark btn-lg w-100">Outturn Services</a>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Information -->
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="card bg-light border-0">
-                        <div class="card-body text-center p-4">
-                            <h5 class="card-title text-primary">About InterportCargo</h5>
-                            <p class="card-text">
-                                InterportCargo provides comprehensive freight and logistics solutions. 
-                                Whether you're a customer looking for reliable shipping services or an employee managing operations, 
-                                our system provides all the tools you need for efficient cargo management.
-                            </p>
-                            <div class="row mt-3">
-                                <div class="col-md-4">
-                                    <small class="text-muted">
-                                        <i class="fas fa-shield-alt me-1"></i>
-                                        Secure & Reliable
-                                    </small>
-                                </div>
-                                <div class="col-md-4">
-                                    <small class="text-muted">
-                                        <i class="fas fa-clock me-1"></i>
-                                        24/7 Support
-                                    </small>
-                                </div>
-                                <div class="col-md-4">
-                                    <small class="text-muted">
-                                        <i class="fas fa-globe me-1"></i>
-                                        Global Reach
-                                    </small>
-                                </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">
+                                    <i class="fas fa-globe me-1"></i>
+                                    Global Reach
+                                </small>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <!-- Redirect to Quotations page for authenticated users -->
+                <div class="text-center">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        You are logged in. Please navigate using the menu above.
+                    </div>
+                    <a href="/Quotations/Index" class="btn btn-primary btn-lg mt-3">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>View Quotations
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </div>

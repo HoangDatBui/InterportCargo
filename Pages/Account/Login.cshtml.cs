@@ -40,8 +40,8 @@ namespace InterportCargo.Pages.Account
                 HttpContext.Session.SetString("UserType", result.UserType ?? string.Empty);
                 HttpContext.Session.SetInt32("UserId", result.UserId ?? 0);
 
-                // Redirect to home page
-                return RedirectToPage("/Index");
+                // Redirect to Quotations page
+                return RedirectToPage("/Quotations/Index");
             }
             else
             {
