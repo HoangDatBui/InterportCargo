@@ -48,6 +48,18 @@ namespace InterportCargo.Tests
             Assert.False(result.IsSuccess);
         }
 
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("", "password")]
+        [InlineData("user@x.com", " ")]
+        public void Empty_Inputs_Returns_Failure(string? email, string? password)
+        {
+            using var ctx = _db.CreateContext();
+            var svc = new AuthenticationService(new EFCustomerRepository(ctx), new EFEmployeeRepository(ctx));
+            var result = svc.AuthenticateUser(email ?? string.Empty, password ?? string.Empty);
+            Assert.False(result.IsSuccess);
+        }
+
         private static string Hash(string password)
         {
             using var sha = SHA256.Create();

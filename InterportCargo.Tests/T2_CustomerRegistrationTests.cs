@@ -1,7 +1,10 @@
+using InterportCargo.Application.Services;
 using InterportCargo.BusinessLogic.Entities;
+using InterportCargo.BusinessLogic.Interfaces;
 using InterportCargo.BusinessLogic.Services;
 using InterportCargo.DataAccess.Repositories;
 using InterportCargo.DataAccess.Data;
+using Moq;
 using System.Security.Cryptography;
 using System.Text;
 using Xunit;
@@ -75,6 +78,50 @@ namespace InterportCargo.Tests
 
             Assert.False(result.IsSuccess);
             Assert.Empty(ctx.Customers.Where(c => c.Email == "x@y.com"));
+        }
+
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("bad-email")]
+        public async Task RegisterCustomer_AppService_Fails_On_Invalid_Email(string email)
+        {
+            var svc = new CustomerAppService(Mock.Of<ICustomerService>());
+            var result = await svc.RegisterCustomerAsync("A", "B", email, "04", null, "Addr", "Secret123");
+            Assert.False(result.IsSuccess);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        public async Task RegisterCustomer_AppService_Fails_On_Blank_Password(string? pwd)
+        {
+            var svc = new CustomerAppService(Mock.Of<ICustomerService>());
+            var result = await svc.RegisterCustomerAsync("A", "B", "x@y.com", "04", null, "Addr", pwd ?? string.Empty);
+            Assert.False(result.IsSuccess);
+        }
+
+        [Fact]
+        public async Task RegisterCustomer_AppService_Fails_On_Short_Password()
+        {
+            var svc = new CustomerAppService(Mock.Of<ICustomerService>());
+            var result = await svc.RegisterCustomerAsync("A", "B", "x@y.com", "04", null, "Addr", "12345");
+            Assert.False(result.IsSuccess);
+        }
+
+        [Fact]
+        public async Task RegisterCustomer_AppService_Calls_Business_Service_On_Valid_Input()
+        {
+            var business = new Mock<ICustomerService>();
+            business
+                .Setup(b => b.RegisterCustomerAsync(It.IsAny<Customer>(), It.IsAny<string>()))
+                .ReturnsAsync(RegistrationResult.Success(new Customer { Id = 10, Email = "x@y.com" }));
+
+            var app = new CustomerAppService(business.Object);
+            var result = await app.RegisterCustomerAsync("A", "B", "x@y.com", "04", null, "Addr", "Secret123");
+
+            Assert.True(result.IsSuccess);
+            business.Verify(b => b.RegisterCustomerAsync(It.Is<Customer>(c => c.Email == "x@y.com"), "Secret123"), Times.Once);
         }
     }
 }
